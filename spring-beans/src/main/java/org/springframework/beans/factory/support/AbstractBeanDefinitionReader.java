@@ -196,14 +196,10 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 	}
 
 	/**
-	 * Load bean definitions from the specified resource location.
-	 * <p>The location can also be a location pattern, provided that the
-	 * ResourceLoader of this bean definition reader is a ResourcePatternResolver.
-	 * @param location the resource location, to be loaded with the ResourceLoader
-	 * (or ResourcePatternResolver) of this bean definition reader
-	 * @param actualResources a Set to be filled with the actual Resource objects
-	 * that have been resolved during the loading process. May be {@code null}
-	 * to indicate that the caller is not interested in those Resource objects.
+	 * 从指定的资源位置加载bean定义。
+	 * <p>该位置也可以是位置模式，只要此bean定义阅读器的ResourceLoader是ResourcePatternResolver。
+	 * @param location 该bean定义阅读器的ResourceLoader（或ResourcePatternResolver）要加载的资源位置，
+	 * @param actualResources 一个Set，该Set将填充在加载过程中已解析的实际Resource对象。可能为{@code null}，表明调用者对那些Resource对象不感兴趣。
 	 * @return the number of bean definitions found
 	 * @throws BeanDefinitionStoreException in case of loading or parsing errors
 	 * @see #getResourceLoader()
@@ -236,7 +232,7 @@ public abstract class AbstractBeanDefinitionReader implements BeanDefinitionRead
 			}
 		}
 		else {
-			// Can only load single resources by absolute URL.
+			// 只能通过绝对URL加载单个资源。
 			Resource resource = resourceLoader.getResource(location);
 			int count = loadBeanDefinitions(resource);
 			if (actualResources != null) {

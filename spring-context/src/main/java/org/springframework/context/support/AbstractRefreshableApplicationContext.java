@@ -113,9 +113,8 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 
 
 	/**
-	 * This implementation performs an actual refresh of this context's underlying
-	 * bean factory, shutting down the previous bean factory (if any) and
-	 * initializing a fresh bean factory for the next phase of the context's lifecycle.
+	 * 此实现对该上下文的基础bean工厂进行实际刷新，关闭前一个bean工厂（如果有），
+	 * 并为上下文生命周期的下一阶段初始化一个新的bean工厂。
 	 */
 	@Override
 	protected final void refreshBeanFactory() throws BeansException {
@@ -124,9 +123,12 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 			closeBeanFactory();
 		}
 		try {
+			//初始化一个新的beanFactory
 			DefaultListableBeanFactory beanFactory = createBeanFactory();
 			beanFactory.setSerializationId(getId());
+			//定制beanFactory，可设置自定义属性
 			customizeBeanFactory(beanFactory);
+			//子类实现，加载beanDefinition
 			loadBeanDefinitions(beanFactory);
 			this.beanFactory = beanFactory;
 		}
@@ -180,7 +182,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	}
 
 	/**
-	 * Create an internal bean factory for this context.
+	 * 为此上下文创建一个内部bean工厂。
 	 * Called for each {@link #refresh()} attempt.
 	 * <p>The default implementation creates a
 	 * {@link org.springframework.beans.factory.support.DefaultListableBeanFactory}
@@ -198,7 +200,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	}
 
 	/**
-	 * Customize the internal bean factory used by this context.
+	 * 定制此上下文使用的内部bean工厂。
 	 * Called for each {@link #refresh()} attempt.
 	 * <p>The default implementation applies this context's
 	 * {@linkplain #setAllowBeanDefinitionOverriding "allowBeanDefinitionOverriding"}
@@ -221,8 +223,7 @@ public abstract class AbstractRefreshableApplicationContext extends AbstractAppl
 	}
 
 	/**
-	 * Load bean definitions into the given bean factory, typically through
-	 * delegating to one or more bean definition readers.
+	 * 通常通过委派一个或多个bean定义读取器，将bean定义加载到给定的bean工厂中。
 	 * @param beanFactory the bean factory to load bean definitions into
 	 * @throws BeansException if parsing of the bean definitions failed
 	 * @throws IOException if loading of bean definition files failed

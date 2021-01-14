@@ -330,9 +330,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Return the {@code Environment} for this application context in configurable
-	 * form, allowing for further customization.
-	 * <p>If none specified, a default environment will be initialized via
+	 * 以可配置的形式返回此应用程序上下文的{@code Environment}，以便进行进一步的自定义。
+	 * <p>如果未指定，则默认环境将通过初始化
 	 * {@link #createEnvironment()}.
 	 */
 	@Override
@@ -549,7 +548,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		synchronized (this.startupShutdownMonitor) {
 			StartupStep contextRefresh = this.applicationStartup.start("spring.context.refresh");
 
-			// Prepare this context for refreshing.
+			// 准备此上下文以进行刷新，设置其启动日期和活动标志以及执行属性源的任何初始化。
 			prepareRefresh();
 
 			// 调用子类refreshBeanFactory()，创建beanFactory，加载BeanDefinitions
@@ -615,8 +614,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Prepare this context for refreshing, setting its startup date and
-	 * active flag as well as performing any initialization of property sources.
+	 * 准备此上下文以进行刷新，设置其启动日期和活动标志以及执行属性源的任何初始化。
 	 */
 	protected void prepareRefresh() {
 		// Switch to active.
@@ -633,11 +631,11 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 			}
 		}
 
-		// Initialize any placeholder property sources in the context environment.
+		// 在上下文环境中初始化任何占位符属性源。
 		initPropertySources();
 
-		// Validate that all properties marked as required are resolvable:
-		// see ConfigurablePropertyResolver#setRequiredProperties
+		// 验证所有标记为必需的属性都是可解析的：
+		// 请参见ConfigurablePropertyResolversetRequiredProperties
 		getEnvironment().validateRequiredProperties();
 
 		// Store pre-refresh ApplicationListeners...
@@ -763,8 +761,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Initialize the MessageSource.
-	 * Use parent's if none defined in this context.
+	 * 初始化MessageSource。如果在此上下文中未定义父项，则使用父项。
 	 */
 	protected void initMessageSource() {
 		ConfigurableListableBeanFactory beanFactory = getBeanFactory();
@@ -1344,8 +1341,8 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	}
 
 	/**
-	 * Return the internal bean factory of the parent context if it implements
-	 * ConfigurableApplicationContext; else, return the parent context itself.
+	 * 如果实现了ConfigurableApplicationContext，则返回父上下文的内部bean工厂；
+	 * 否则，返回false。否则，返回父上下文本身。
 	 * @see org.springframework.context.ConfigurableApplicationContext#getBeanFactory
 	 */
 	@Nullable

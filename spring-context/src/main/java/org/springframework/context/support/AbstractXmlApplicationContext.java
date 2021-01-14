@@ -72,33 +72,32 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 
 
 	/**
-	 * Loads the bean definitions via an XmlBeanDefinitionReader.
+	 * 通过XmlBeanDefinitionReader加载bean定义。
 	 * @see org.springframework.beans.factory.xml.XmlBeanDefinitionReader
 	 * @see #initBeanDefinitionReader
 	 * @see #loadBeanDefinitions
 	 */
 	@Override
 	protected void loadBeanDefinitions(DefaultListableBeanFactory beanFactory) throws BeansException, IOException {
-		// Create a new XmlBeanDefinitionReader for the given BeanFactory.
+		// 为给定的BeanFactory创建一个新的XmlBeanDefinitionReader。
+		// beanFactory继承BeanDefinitionRegistry，reader内部持有来注册beanDefinition
 		XmlBeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanFactory);
 
-		// Configure the bean definition reader with this context's
-		// resource loading environment.
+		// 使用此上下文的配置Bean定义阅读器
+		// 资源加载环境。
 		beanDefinitionReader.setEnvironment(this.getEnvironment());
 		beanDefinitionReader.setResourceLoader(this);
 		beanDefinitionReader.setEntityResolver(new ResourceEntityResolver(this));
 
-		// Allow a subclass to provide custom initialization of the reader,
-		// then proceed with actually loading the bean definitions.
+		// 允许子类提供阅读器的自定义初始化，然后继续实际加载Bean定义。
 		initBeanDefinitionReader(beanDefinitionReader);
+		// 加载BeanDefinition
 		loadBeanDefinitions(beanDefinitionReader);
 	}
 
 	/**
-	 * Initialize the bean definition reader used for loading the bean
-	 * definitions of this context. Default implementation is empty.
-	 * <p>Can be overridden in subclasses, e.g. for turning off XML validation
-	 * or using a different XmlBeanDefinitionParser implementation.
+	 * 初始化用于加载此上下文的Bean定义的Bean定义读取器。默认实现为空。
+	 * 可以在子类中覆盖，例如用于关闭XML验证或使用其他XmlBeanDefinitionParser实现。
 	 * @param reader the bean definition reader used by this context
 	 * @see org.springframework.beans.factory.xml.XmlBeanDefinitionReader#setDocumentReaderClass
 	 */
@@ -107,9 +106,8 @@ public abstract class AbstractXmlApplicationContext extends AbstractRefreshableC
 	}
 
 	/**
-	 * Load the bean definitions with the given XmlBeanDefinitionReader.
-	 * <p>The lifecycle of the bean factory is handled by the {@link #refreshBeanFactory}
-	 * method; hence this method is just supposed to load and/or register bean definitions.
+	 * 使用给定的XmlBeanDefinitionReader加载bean定义。
+	 * <p> bean工厂的生命周期由{@link refreshBeanFactory}方法处理；因此，该方法仅用于加载和注册bean定义。
 	 * @param reader the XmlBeanDefinitionReader to use
 	 * @throws BeansException in case of bean registration errors
 	 * @throws IOException if the required XML document isn't found
