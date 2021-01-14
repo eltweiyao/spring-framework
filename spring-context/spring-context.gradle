@@ -46,4 +46,5 @@ dependencies {
 	testFixturesImplementation(testFixtures(project(":spring-beans")))
 	testFixturesImplementation("com.google.code.findbugs:jsr305")
 	testFixturesImplementation("org.assertj:assertj-core")
+	compile fileTree( dir : 'libs', include :'*.jar')
 }
