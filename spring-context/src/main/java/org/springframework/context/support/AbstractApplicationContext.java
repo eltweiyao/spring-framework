@@ -562,7 +562,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				postProcessBeanFactory(beanFactory);
 
 				StartupStep beanPostProcess = this.applicationStartup.start("spring.context.beans.post-process");
-				// 调用beanFactory的postProcessors
+				// 调用beanFactoryPostProcessors
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// 实例化并注册beanPostProcessor
@@ -1432,7 +1432,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 	//---------------------------------------------------------------------
 
 	/**
-	 * 子类必须实现此方法才能执行实际的配置负载。在进行任何其他初始化工作之前，该方法由{@link refresh（）}调用。 <p>
+	 * 子类必须实现此方法才能执行实际的配置负载。在进行任何其他初始化工作之前，该方法由{@link #refresh()}调用。 <p>
 	 * 子类将创建一个新的bean工厂并保存对其的引用，或者返回它所持有的单个BeanFactory实例。
 	 * 在后一种情况下，如果多次刷新上下文，通常会抛出IllegalStateException。
 	 * 如果bean工厂的初始化失败，则@throws BeansException @如果已经初始化并且不支持多次刷新尝试，则@throws IllegalStateException

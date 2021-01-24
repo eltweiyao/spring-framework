@@ -111,12 +111,9 @@ class ConstructorResolver {
 
 
 	/**
-	 * "autowire constructor" (with constructor arguments by type) behavior.
-	 * Also applied if explicit constructor argument values are specified,
-	 * matching all remaining arguments with beans from the bean factory.
-	 * <p>This corresponds to constructor injection: In this mode, a Spring
-	 * bean factory is able to host components that expect constructor-based
-	 * dependency resolution.
+	 * “自动装配构造函数”（按类型带有构造函数参数）的行为。
+	 * 如果指定了显式构造函数自变量值，则将所有剩余自变量与Bean工厂中的Bean进行匹配时也适用。
+	 * 这对应于构造函数注入：在这种模式下，Spring Bean工厂能够托管需要基于构造函数的依赖关系解析的组件。
 	 * @param beanName the name of the bean
 	 * @param mbd the merged bean definition for the bean
 	 * @param chosenCtors chosen candidate constructors (or {@code null} if none)
@@ -133,29 +130,33 @@ class ConstructorResolver {
 		Constructor<?> constructorToUse = null;
 		ArgumentsHolder argsHolderToUse = null;
 		Object[] argsToUse = null;
-
+		//explicitArgs通过getBean方法传入 则直接使用
 		if (explicitArgs != null) {
 			argsToUse = explicitArgs;
 		}
 		else {
+			// 若没传入则从配置文件解析
 			Object[] argsToResolve = null;
 			synchronized (mbd.constructorArgumentLock) {
+				//尝试从缓存获取
 				constructorToUse = (Constructor<?>) mbd.resolvedConstructorOrFactoryMethod;
 				if (constructorToUse != null && mbd.constructorArgumentsResolved) {
-					// Found a cached constructor...
+					// 从缓存获取
 					argsToUse = mbd.resolvedConstructorArguments;
 					if (argsToUse == null) {
 						argsToResolve = mbd.preparedConstructorArguments;
 					}
 				}
 			}
+			//如果缓存中有
 			if (argsToResolve != null) {
+				//解析参数类型
 				argsToUse = resolvePreparedArguments(beanName, mbd, bw, constructorToUse, argsToResolve);
 			}
 		}
-
+		// 没有缓存
 		if (constructorToUse == null || argsToUse == null) {
-			// Take specified constructors, if any.
+			// 采用指定的构造函数（如果有）。
 			Constructor<?>[] candidates = chosenCtors;
 			if (candidates == null) {
 				Class<?> beanClass = mbd.getBeanClass();
@@ -169,7 +170,7 @@ class ConstructorResolver {
 							"] from ClassLoader [" + beanClass.getClassLoader() + "] failed", ex);
 				}
 			}
-
+			// 缓存无参构造函数
 			if (candidates.length == 1 && explicitArgs == null && !mbd.hasConstructorArgumentValues()) {
 				Constructor<?> uniqueCandidate = candidates[0];
 				if (uniqueCandidate.getParameterCount() == 0) {
@@ -183,7 +184,7 @@ class ConstructorResolver {
 				}
 			}
 
-			// Need to resolve the constructor.
+			// 需要解决构造函数。
 			boolean autowiring = (chosenCtors != null ||
 					mbd.getResolvedAutowireMode() == AutowireCapableBeanFactory.AUTOWIRE_CONSTRUCTOR);
 			ConstructorArgumentValues resolvedValues = null;
@@ -207,8 +208,7 @@ class ConstructorResolver {
 				int parameterCount = candidate.getParameterCount();
 
 				if (constructorToUse != null && argsToUse != null && argsToUse.length > parameterCount) {
-					// Already found greedy constructor that can be satisfied ->
-					// do not look any further, there are only less greedy constructors left.
+					// 已经发现可以满足的贪婪构造函数->看起来不再赘述，只剩下更少的贪婪构造函数。
 					break;
 				}
 				if (parameterCount < minNrOfArgs) {

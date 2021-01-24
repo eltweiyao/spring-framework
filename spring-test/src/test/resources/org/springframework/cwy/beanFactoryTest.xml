@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean id="cwyTestBean" class="org.springframework.cwy.CwyTestBean" />
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+		default-autowire="byType">
+<!--	<bean id="cwyTestBean" class="org.springframework.cwy.CwyTestBean" >-->
+<!--&lt;!&ndash;		<property name="cwyFactoryBean" ref="cwyFactoryBean"/>&ndash;&gt;-->
+<!--	</bean>-->
+	<bean id="cwyBean" class="org.springframework.cwy.CwyFactoryBean" />
 </beans>
