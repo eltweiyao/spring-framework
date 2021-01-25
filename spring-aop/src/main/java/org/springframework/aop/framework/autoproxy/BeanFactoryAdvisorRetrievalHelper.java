@@ -59,8 +59,8 @@ public class BeanFactoryAdvisorRetrievalHelper {
 
 
 	/**
-	 * Find all eligible Advisor beans in the current bean factory,
-	 * ignoring FactoryBeans and excluding beans that are currently in creation.
+	 * 查找beanFactory中所有合格的advisor bean
+	 * 忽略FactoryBeans并排除当前正在创建的bean。
 	 * @return the list of {@link org.springframework.aop.Advisor} beans
 	 * @see #isEligibleBean
 	 */
@@ -100,8 +100,7 @@ public class BeanFactoryAdvisorRetrievalHelper {
 									logger.trace("Skipping advisor '" + name +
 											"' with dependency on currently created bean: " + ex.getMessage());
 								}
-								// Ignore: indicates a reference back to the bean we're trying to advise.
-								// We want to find advisors other than the currently created bean itself.
+								// 忽略：表示对我们要建议的bean的引用。除了当前创建的bean本身之外，我们还想找到其他顾问。
 								continue;
 							}
 						}

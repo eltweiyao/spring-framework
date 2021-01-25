@@ -6,6 +6,6 @@
 ### 循环依赖示例
 ![循环依赖示例](img/Spring解决循环依赖示例.png)
 ### 生命周期
-![Bean生命周期](img/Bean生命周期.png)
+![Bean实例化](img/Bean实例化.png)
 ### ApplicationContext#refresh
 ![ApplicationContext#refresh](img/ApplicationContext-refresh流程.png)

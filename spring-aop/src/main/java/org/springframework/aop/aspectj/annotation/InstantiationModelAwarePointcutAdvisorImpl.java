@@ -84,8 +84,11 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 			Method aspectJAdviceMethod, AspectJAdvisorFactory aspectJAdvisorFactory,
 			MetadataAwareAspectInstanceFactory aspectInstanceFactory, int declarationOrder, String aspectName) {
 
+		//test()
 		this.declaredPointcut = declaredPointcut;
+
 		this.declaringClass = aspectJAdviceMethod.getDeclaringClass();
+		//public void test.AspectJTest.beforeTest()
 		this.methodName = aspectJAdviceMethod.getName();
 		this.parameterTypes = aspectJAdviceMethod.getParameterTypes();
 		this.aspectJAdviceMethod = aspectJAdviceMethod;
@@ -110,6 +113,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 			// A singleton aspect.
 			this.pointcut = this.declaredPointcut;
 			this.lazy = false;
+			//获取增强 catch、after、aroud、throw都是直接实现MethodInterceptor，before、returnind是被MethodInterceptor持有
 			this.instantiatedAdvice = instantiateAdvice(this.declaredPointcut);
 		}
 	}

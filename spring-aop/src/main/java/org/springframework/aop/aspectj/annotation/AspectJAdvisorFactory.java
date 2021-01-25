@@ -39,13 +39,10 @@ import org.springframework.lang.Nullable;
 public interface AspectJAdvisorFactory {
 
 	/**
-	 * Determine whether or not the given class is an aspect, as reported
-	 * by AspectJ's {@link org.aspectj.lang.reflect.AjTypeSystem}.
-	 * <p>Will simply return {@code false} if the supposed aspect is
-	 * invalid (such as an extension of a concrete aspect class).
-	 * Will return true for some aspects that Spring AOP cannot process,
-	 * such as those with unsupported instantiation models.
-	 * Use the {@link #validate} method to handle these cases if necessary.
+	 * 根据AspectJ的{@link org.aspectj.lang.reflect.AjTypeSystem}报告，确定给定的类是否为方面。
+	 * 如果假定的方面无效（例如，具体方面类的扩展），将仅返回{@code false}。
+	 * 对于Spring AOP无法处理的某些方面，例如具有不受支持的实例化模型的方面，将返回true。
+	 * 如有必要，使用{@link #validate}方法处理这些情况。
 	 * @param clazz the supposed annotation-style AspectJ class
 	 * @return whether or not this class is recognized by AspectJ as an aspect class
 	 */
