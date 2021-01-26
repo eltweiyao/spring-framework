@@ -27,4 +27,14 @@ public class BeanFactoryTest {
 		AbstractXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("org/springframework/cwy/beanFactoryTest.xml");
 		System.out.println(applicationContext.getBeanDefinitionNames());
 	}
+
+	@Test
+	public void exposeTest() {
+		BeanFactory beanFactory = new XmlBeanFactory(new ClassPathResource("org/springframework/cwy/beanFactoryTest.xml"));
+		AbstractXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("org/springframework/cwy/beanFactoryTest.xml");
+		System.out.println(applicationContext.getBeanDefinitionNames());
+		ExposeProxyTestBean bean = (ExposeProxyTestBean) applicationContext.getBean("exposeProxyTestBean");
+		bean.A();
+		bean.exposeA();
+	}
 }
