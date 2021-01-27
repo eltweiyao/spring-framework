@@ -647,6 +647,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 		PreparedStatement ps = null;
 		try {
 			ps = psc.createPreparedStatement(con);
+			//应用用户设定的输入参数
 			applyStatementSettings(ps);
 			T result = action.doInPreparedStatement(ps);
 			handleWarnings(ps);
@@ -655,6 +656,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 		catch (SQLException ex) {
 			// Release Connection early, to avoid potential connection pool deadlock
 			// in the case when the exception translator hasn't been initialized yet.
+			// 释放数据库连接避免当异常转换器没有被初始化时出现连接池死锁
 			if (psc instanceof ParameterDisposer) {
 				((ParameterDisposer) psc).cleanupParameters();
 			}
@@ -960,6 +962,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 		return updateCount(execute(psc, ps -> {
 			try {
 				if (pss != null) {
+					// 设置PreparedStatement所需的全部参数
 					pss.setValues(ps);
 				}
 				int rows = ps.executeUpdate();
@@ -992,6 +995,7 @@ public class JdbcTemplate extends JdbcAccessor implements JdbcOperations {
 			int rows = ps.executeUpdate();
 			List<Map<String, Object>> generatedKeys = generatedKeyHolder.getKeyList();
 			generatedKeys.clear();
+			//设置参数
 			ResultSet keys = ps.getGeneratedKeys();
 			if (keys != null) {
 				try {

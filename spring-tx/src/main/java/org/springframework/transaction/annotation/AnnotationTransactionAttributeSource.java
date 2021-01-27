@@ -160,12 +160,10 @@ public class AnnotationTransactionAttributeSource extends AbstractFallbackTransa
 	}
 
 	/**
-	 * Determine the transaction attribute for the given method or class.
-	 * <p>This implementation delegates to configured
-	 * {@link TransactionAnnotationParser TransactionAnnotationParsers}
-	 * for parsing known annotations into Spring's metadata attribute class.
-	 * Returns {@code null} if it's not transactional.
-	 * <p>Can be overridden to support custom annotations that carry transaction metadata.
+	 * 确定给定方法或类的事务属性。
+	 * 此实现委派了已配置的{@link TransactionAnnotationParser TransactionAnnotationParsers}，
+	 * 用于将已知的注释解析为Spring的元数据属性类。如果不是事务型，则返回{@code null}。
+	 * 可以重写以支持带有事务元数据的自定义注释。
 	 * @param element the annotated method or class
 	 * @return the configured transaction attribute, or {@code null} if none was found
 	 */
